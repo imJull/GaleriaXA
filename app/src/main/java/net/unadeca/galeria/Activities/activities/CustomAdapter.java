@@ -70,7 +70,8 @@ public class CustomAdapter extends ArrayAdapter<Imagenes> {
         result.startAnimation(animation);
         lastPosition = position;
 
-        Glide.with(mContext).load("https://cdn.shopify.com/s/files/1/0605/3649/products/100-006-0026_1024x1024.jpg?v=1467140282").into(viewHolder.imagen); //Carga una imagen de un url
+        //Glide.with(mContext).load("https://i.pinimg.com/originals/75/00/30/7500302b182070761e3ac8269a8c4443.jpg").into(viewHolder.imagen); //Carga una imagen de un url
+        Glide.with(mContext).load(dataModel.imagen).error(Glide.with(mContext).load(R.drawable.ic_add_a_photo_black_24dp)).fitCenter().into(viewHolder.imagen); //Carga imagen dimanica
         viewHolder.titulo.setText(dataModel.titulo);
         viewHolder.descripcion.setText(dataModel.descripcion);
         viewHolder.comentario.setText(dataModel.imagen); //Cargar url En la imagen

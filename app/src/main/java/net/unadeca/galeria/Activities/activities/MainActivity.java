@@ -5,12 +5,15 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import net.unadeca.galeria.Activities.database.models.Imagenes;
@@ -20,7 +23,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView lista;
+    private RecyclerView lista;
     private CoordinatorLayout view;
 
     @Override
@@ -31,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         lista = findViewById(R.id.lista);
+        lista.setLayoutManager(new LinearLayoutManager(this));
         view = findViewById(R.id.coordinador);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -71,12 +75,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testBaseDatos() {
+        Delete.table(Imagenes.class);
         Imagenes imagen;
         for (int a = 0; a < 10; a++) {
             imagen = new Imagenes();
-            imagen.imagen = "";
-            imagen.descripcion = "descripcion de prueba" + (a + 1);
-            imagen.titulo = "Titulo de prueba" + (a + 1);
+            imagen.imagen = "https://i.pinimg.com/originals/75/00/30/7500302b182070761e3ac8269a8c4443.jpg";
+            imagen.descripcion = "Descripcion " + (a + 1);
+            imagen.titulo = "Titulo " + (a + 1);
             imagen.save();
 
         }
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Adaptador
     private void establecerAdaptador() {
-        lista.setAdapter(new CustomAdapter(getImagenes(), this, view));
+        lista.setAdapter(new CustomAdapterRecycler(getImagenes(), this, view));
     }
 
     //Lista de imagenes
